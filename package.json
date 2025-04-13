@@ -1,17 +1,16 @@
 {
   "name": "design-wiki",
   "version": "1.0.0",
+  "type": "module",
   "scripts": {
-    "dev": "vite dev",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dev": "svelte-kit dev",
+    "build": "svelte-kit build",
+    "preview": "svelte-kit preview"
   },
   "devDependencies": {
-    "@sveltejs/kit": "latest",
-    "@sveltejs/adapter-auto": "latest",
-    "@sveltejs/vite-plugin-svelte": "latest",
-    "svelte": "latest",
-    "vite": "^4.5.0"
-  },
-  "type": "module"
+    "@sveltejs/kit": "next",
+    "@sveltejs/adapter-auto": "next",
+    "svelte": "^3.59.2",
+    "vite": "^5.1.0"
+  }
 }
