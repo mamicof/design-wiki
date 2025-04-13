@@ -1,5 +1,5 @@
 import adapter from '@sveltejs/adapter-vercel';
-import { vitePreprocess } from '@sveltejs/kit'; // ✅ ここが正しい！
+import { vitePreprocess } from '@sveltejs/kit';
 
 const config = {
   kit: {
