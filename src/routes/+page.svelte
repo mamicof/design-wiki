@@ -1,1 +1,1 @@
-// Placeholder for +page.svelte
+  <h1>Welcome to DesignWiki!</h1>
