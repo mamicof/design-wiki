@@ -1,12 +1,14 @@
-{
-  "name": "design-wiki",
-  "version": "1.0.0",
-  "scripts": {
-    "dev": "vite dev",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "devDependencies": {
-    "vite": "^4.5.0"
+  {
+    "name": "design-wiki",
+    "version": "1.0.0",
+    "scripts": {
+      "dev": "vite dev",
+      "build": "vite build",
+      "preview": "vite preview"
+    },
+    "devDependencies": {
+      "vite": "^4.5.0",
+      "@sveltejs/kit": "latest",
+      "svelte": "latest"
+    }
   }
-}
