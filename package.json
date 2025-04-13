@@ -9,7 +9,7 @@
   "devDependencies": {
     "@sveltejs/kit": "latest",
     "@sveltejs/adapter-auto": "latest",
-    "vite": "^4.5.0",
-    "svelte": "latest"
+    "svelte": "latest",
+    "vite": "^6.0.0"
   }
 }
