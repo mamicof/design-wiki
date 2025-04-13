@@ -9,8 +9,8 @@
   },
   "devDependencies": {
     "@sveltejs/kit": "next",
-    "@sveltejs/adapter-auto": "next",
-    "svelte": "^3.59.2",
+    "@sveltejs/adapter-vercel": "next",
+    "svelte": "^5.0.0-next.30",
     "vite": "^5.1.0"
   }
 }
