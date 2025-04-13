@@ -8,10 +8,10 @@
     "preview": "svelte-kit preview"
   },
   "devDependencies": {
-    "@sveltejs/kit": "latest",
-    "@sveltejs/adapter-auto": "latest",
-    "@sveltejs/vite-plugin-svelte": "latest",
-    "svelte": "latest",
-    "vite": "^6.0.0"
+    "@sveltejs/kit": "^2.0.0",
+    "@sveltejs/adapter-auto": "^3.0.0",
+    "@sveltejs/vite-plugin-svelte": "^3.0.0",
+    "svelte": "^3.59.2",
+    "vite": "^5.0.0"
   }
 }
