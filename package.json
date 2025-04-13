@@ -8,9 +8,9 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "@sveltejs/kit": "next",
-    "@sveltejs/adapter-vercel": "next",
-    "svelte": "^5.0.0-next.30",
+    "@sveltejs/kit": "^2.0.0",
+    "@sveltejs/adapter-vercel": "^3.0.0",
+    "svelte": "^5.0.0",
     "vite": "^5.1.0"
   }
 }
