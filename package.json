@@ -2,9 +2,9 @@
   "name": "design-wiki",
   "version": "1.0.0",
   "scripts": {
-    "dev": "svelte-kit dev",
-    "build": "svelte-kit build",
-    "preview": "svelte-kit preview"
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "devDependencies": {
     "@sveltejs/kit": "latest",
