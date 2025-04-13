@@ -1,2 +1,1 @@
-# デザインWiki
-これはREADMEファイルです。
+// Placeholder for README.md
