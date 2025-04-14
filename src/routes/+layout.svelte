@@ -1,3 +1,4 @@
+<!-- src/routes/+layout.svelte -->
 <script>
   import "../styles/global.css";
 </script>
@@ -12,4 +13,18 @@
   <meta name="twitter:card" content="none" />
 </svelte:head>
 
-<slot />
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-header">デザインWiki</div>
+    <nav class="nav">
+      <a href="/" class="nav-link">TOP</a>
+      <a href="/about" class="nav-link">概要</a>
+      <a href="/tags" class="nav-link">タグ一覧</a>
+      <a href="/search" class="nav-link">検索</a>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <slot />
+  </main>
+</div>
