@@ -1,16 +1,12 @@
 // src/lib/utils/tagColorMap.js
 
-export const tagColorMap = {
-  色: 'tag--yellow',
-  入力: 'tag--teal',
-  フォーム: 'tag--blue',
-  リキャプチャ: 'tag--red',
-  SEO: 'tag--green',
-  UIパターン: 'tag--orange',
-  表記: 'tag--pink',
-  コンポーネント: 'tag--gray',
-  パンくず: 'tag--brown',
-  通知: 'tag--purple',
-  UX: 'tag--blue',
-  // 必要に応じてここに追加
-};
+import tagColorYaml from './tagColorMap.yaml?raw';
+import yaml from 'js-yaml';
+
+const parsed = yaml.load(tagColorYaml);
+
+// YAMLファイル内の形式が `{ tags: [{ name: 'タグ名', class: 'tag--クラス名' }, ...] }` の場合
+export const tagColorMap = {};
+parsed.tags.forEach(tag => {
+  tagColorMap[tag.name] = tag.class;
+});
