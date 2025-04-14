@@ -1,24 +1,33 @@
 // src/lib/utils/articleUtils.js
 import matter from 'gray-matter';
 
+/**
+ * 記事ファイルをすべて取得して整形する関数
+ * 公開ステータスの記事のみを返す
+ */
 export async function getArticles() {
   const files = import.meta.glob('/content/*.md', { as: 'raw' });
   const articles = [];
 
   for (const path in files) {
     const slug = path.split('/').pop().replace('.md', '');
-    const content = await files[path]();
-    const { data, content: body } = matter(content);
+    const rawContent = await files[path]();
+    const { data, content } = matter(rawContent);
 
-    // 公開ステータスでフィルタ（必要なら "非公開" なども考慮可）
-    if (data.status === '非公開') continue;
+    // 公開以外は除外（draft、非公開など）
+    if (data.status !== '公開') continue;
 
     articles.push({
       ...data,
       slug,
-      content: body
+      content,
     });
   }
 
-  return articles.sort((a, b) => new Date(b.date) - new Date(a.date));
+  // 新しい日付順にソート（更新日がある場合はそちら優先）
+  return articles.sort((a, b) => {
+    const dateA = new Date(a.updated || a.date);
+    const dateB = new Date(b.updated || b.date);
+    return dateB - dateA;
+  });
 }
