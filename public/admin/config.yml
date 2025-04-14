@@ -1,0 +1,31 @@
+
+backend:
+  name: github
+  repo: mamicof/design-wiki
+  branch: main
+  auth_scope: repo
+  base_url: https://design-wiki.vercel.app
+  login: true
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+locale: 'ja'
+
+collections:
+  - name: "articles"
+    label: "記事"
+    folder: "content"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "タイトル", name: "title", widget: "string" }
+      - { label: "スラッグ（URL用）", name: "slug", widget: "string" }
+      - { label: "絵文字", name: "emoji", widget: "string", required: false }
+      - { label: "カテゴリ", name: "category", widget: "select", options: ["デザインシステム", "アクセシビリティ", "マーケティング", "SEO", "リサーチ", "ユーザビリティ", "エンジニアリング", "プロセス", "運用"] }
+      - { label: "タグ", name: "tags", widget: "list", required: false }
+      - { label: "画像", name: "image", widget: "image", required: false }
+      - { label: "本文", name: "body", widget: "markdown" }
+      - { label: "公開日", name: "date", widget: "datetime", format: "YYYY-MM-DD HH:mm", required: false }
