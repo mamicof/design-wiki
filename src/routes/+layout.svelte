@@ -1,13 +1,10 @@
-<!-- src/routes/+layout.svelte -->
 <script>
-  export let data;
+  import "../styles/global.css";
 </script>
 
 <svelte:head>
-  <!-- 検索避け -->
+  <!-- 検索避け & OGP無効化 -->
   <meta name="robots" content="noindex, nofollow" />
-
-  <!-- OGP無効化 -->
   <meta property="og:title" content="no-title" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="" />
