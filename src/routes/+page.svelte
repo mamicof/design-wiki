@@ -21,19 +21,18 @@
 
 <svelte:head>
   <meta name="robots" content="noindex, nofollow" />
-  <meta property="og:title" content="no-title" />
+  <meta property="og:title" content="デザインWikiサイト" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="" />
-  <meta property="og:description" content="This page is private." />
-  <meta name="twitter:card" content="none" />
+  <meta property="og:description" content="UIUXを中心とした、画面を持つシステム設計の知識をまとめたサイト。" />
+  <meta name="twitter:card" content="summary" />
 </svelte:head>
 
 <div class="layout">
   <aside class="sidebar">
     <nav>
-      <h1><a href="/">デザインWiki</a></h1>
+      <h1><a href="/">デザインWikiサイト</a></h1>
 
-      <!-- 🔍 検索フォームを上部に移動 -->
       <form action="/search" class="search-form">
         <input type="text" name="q" placeholder="検索キーワード" />
       </form>
@@ -56,12 +55,15 @@
 
   <main class="content">
     <section class="intro">
-      <h2>はじめに</h2>
-      <p>このサイトは、デザイン（UIUX）に関連する情報をまとめたサイトです。業務外の時間に作成したものです。</p>
+      <h2>このサイトについて</h2>
+      <p>
+        このサイトはUIUXを中心とした、画面を持つシステムの設計に関する知識をまとめたサイトです。
+        業務時間外に作成した趣味のサイトです。
+      </p>
     </section>
 
     <section class="section">
-      <h2>閲覧頻度が高いページ</h2>
+      <h2>よくアクセスされる記事</h2>
       <div class="grid">
         {#each popularArticles as article}
           <ArticleCard {article} />
@@ -70,7 +72,7 @@
     </section>
 
     <section class="section">
-      <h2>最近追加したページ</h2>
+      <h2>最近追加した記事</h2>
       <div class="grid">
         {#each recentArticles as article}
           <ArticleCard {article} />
@@ -90,7 +92,7 @@
   .sidebar {
     width: 240px;
     padding: 2rem 1rem 1rem;
-    background-color: #f7f6f3;
+    background-color: #f7f6f3 !important;
     border-right: 1px solid #eee;
   }
 
@@ -110,7 +112,7 @@
     border-radius: 6px;
     font-size: 0.85rem;
     background: #fff;
-    box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
   }
 
   .label {
