@@ -9,7 +9,7 @@
 
   onMount(async () => {
     const all = await getArticles();
-    articles = all.filter(a => a.category === category);
+    articles = all.filter(a => a.category === category && a.status !== 'draft');
   });
 </script>
 
