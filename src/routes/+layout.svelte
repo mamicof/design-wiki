@@ -1,4 +1,4 @@
-<!-- src/routes/+layout.svelte -->
+// src/routes/+layout.svelte
 <script>
   import "../styles/global.css";
 </script>
@@ -15,16 +15,17 @@
 
 <div class="layout">
   <aside class="sidebar">
-    <div class="sidebar-header">デザインWiki</div>
-    <nav class="nav">
-      <a href="/" class="nav-link">TOP</a>
-      <a href="/about" class="nav-link">概要</a>
-      <a href="/tags" class="nav-link">タグ一覧</a>
-      <a href="/search" class="nav-link">検索</a>
+    <nav>
+      <h1>デザインWiki</h1>
+      <ul>
+        <li><a href="/">TOP</a></li>
+        <li><a href="/overview">概要</a></li>
+        <li><a href="/tags">タグ一覧</a></li>
+        <li><a href="/search">検索</a></li>
+      </ul>
     </nav>
   </aside>
-
-  <main class="main">
+  <main class="content">
     <slot />
   </main>
 </div>
