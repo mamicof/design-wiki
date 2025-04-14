@@ -2,7 +2,7 @@
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  background-color: #ffffff;
+  background-color: #f7f6f3; /* ← ← ← ここ変更：Notion風ベース色に統一 */
   color: #333;
   line-height: 1.6;
 }
@@ -11,7 +11,7 @@ body {
 .layout {
   display: flex;
   min-height: 100vh;
-  background-color: #ffffff;
+  background-color: #f7f6f3; /* ← ← ← ここ変更：全体背景をsidebarと統一 */
 }
 
 /* サイドバー */
@@ -99,6 +99,7 @@ body {
   padding: 2rem;
   background-color: #ffffff;
   box-sizing: border-box;
+  border-left: 1px solid #eee;
 }
 
 /* パンくずリスト */
