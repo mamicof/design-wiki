@@ -1,9 +1,9 @@
 <script>
   import "../styles/global.css";
+  import Breadcrumbs from '../lib/Breadcrumbs.svelte';
 </script>
 
 <svelte:head>
-  <!-- 検索避け & OGP無効化 -->
   <meta name="robots" content="noindex, nofollow" />
   <meta property="og:title" content="no-title" />
   <meta property="og:type" content="website" />
@@ -14,8 +14,8 @@
 
 <div class="layout">
   <aside class="sidebar">
+    <h1>デザインWiki</h1>
     <nav>
-      <h1>デザインWiki</h1>
       <ul>
         <li><a href="/">TOP</a></li>
         <li><a href="/overview">概要</a></li>
@@ -25,6 +25,7 @@
     </nav>
   </aside>
   <main class="content">
+    <Breadcrumbs />
     <slot />
   </main>
 </div>
