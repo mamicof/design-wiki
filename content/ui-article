@@ -1,0 +1,42 @@
+---
+title: "UI設計の基本原則"
+emoji: "🎨"
+image: "/uploads/sample-ui.jpg"
+status: 公開
+category: デザインシステム
+tags:
+  - UI
+  - カラー
+  - コンポーネント
+date: "2025-04-10"
+---
+
+UI（ユーザーインターフェース）は、ユーザーがシステムやサービスとやり取りする際に触れる **画面や操作方法** を指します。
+
+---
+
+## UI設計で大切なこと
+
+- 一貫性：同じ操作で同じ結果が得られるようにする
+- 視認性：情報を見やすく、グルーピングで整理する
+- フィードバック：ユーザーの操作に対して反応が返ってくること
+
+---
+
+## よく使うパーツ
+
+- ボタン
+- ナビゲーション
+- 入力フォーム
+- モーダル・ダイアログ
+
+---
+
+## おすすめリンク
+
+- [Material Design](https://m3.material.io/)
+- [Apple Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines/)
+
+---
+
+この記事は UI 設計の初心者にもわかりやすい内容となるよう構成しています。
