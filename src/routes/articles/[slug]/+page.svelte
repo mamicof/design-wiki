@@ -1,38 +1,41 @@
 <!-- src/routes/articles/[slug]/+page.svelte -->
 <script>
   import { page } from '$app/stores';
-  import { onMount } from 'svelte';
   import { error } from '@sveltejs/kit';
-  import fs from 'fs';
-  import path from 'path';
+  import { onMount } from 'svelte';
   import matter from 'gray-matter';
   import { marked } from 'marked';
 
+  const files = import.meta.glob('/content/*.md', { as: 'raw' });
+
   let article = null;
   let toc = [];
+
   $: slug = $page.params.slug;
 
-  onMount(() => {
-    try {
-      const filePath = path.resolve('content', `${slug}.md`);
-      const fileContent = fs.readFileSync(filePath, 'utf-8');
-      const { data, content } = matter(fileContent);
+  onMount(async () => {
+    const path = `/content/${slug}.md`;
+    const loader = files[path];
 
-      const renderer = new marked.Renderer();
-      renderer.heading = (text, level) => {
-        if (level <= 3) {
-          const id = text.toLowerCase().replace(/[^\w]+/g, '-');
-          toc.push({ text, id, level });
-          return `<h${level} id="${id}">${text}</h${level}>`;
-        }
-        return `<h${level}>${text}</h${level}>`;
-      };
-
-      const html = marked(content, { renderer });
-      article = { ...data, content: html };
-    } catch (err) {
+    if (!loader) {
       throw error(404, '記事が見つかりません');
     }
+
+    const raw = await loader();
+    const { data, content } = matter(raw);
+
+    const renderer = new marked.Renderer();
+    renderer.heading = (text, level) => {
+      if (level <= 3) {
+        const id = text.toLowerCase().replace(/[^\w]+/g, '-');
+        toc.push({ text, id, level });
+        return `<h${level} id="${id}">${text}</h${level}>`;
+      }
+      return `<h${level}>${text}</h${level}>`;
+    };
+
+    const html = marked(content, { renderer });
+    article = { ...data, content: html };
   });
 </script>
 
