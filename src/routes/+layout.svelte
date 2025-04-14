@@ -71,7 +71,7 @@
   .sidebar {
     width: 240px;
     padding: 2rem;
-    background-color: #ffffff;
+    background-color: #f9f8f6;
     border-right: 1px solid #eee;
   }
   .sidebar h1 {
