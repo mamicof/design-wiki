@@ -1,11 +1,9 @@
 <script>
   import "../styles/global.css";
   import ArticleCard from '$lib/components/ArticleCard.svelte';
-  import { getArticles } from '$lib/utils/articleUtils';
 
-  const allArticles = await getArticles();
-  const popularArticles = allArticles.slice(0, 4);
-  const recentArticles = allArticles.slice(-4).reverse();
+  export let data;
+  const { popularArticles, recentArticles } = data;
 
   const categories = [
     "デザインシステム",
