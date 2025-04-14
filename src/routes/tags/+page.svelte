@@ -1,80 +1,34 @@
 <script>
-  import { page } from '$app/stores';
-  import { onMount } from 'svelte';
-  import ArticleCard from '$lib/components/ArticleCard.svelte';
-  import { getArticles } from '$lib/utils/articleUtils';
-
-  let tag = '';
-  let articles = [];
-
-  $: tag = $page.params.tag;
-
-  onMount(async () => {
-    const all = await getArticles();
-    articles = all.filter(
-      a => a.status === '公開' && a.tags?.includes(tag)
-    );
-  });
+  import tagData from '$lib/data/tagColorMap.yaml';
 </script>
 
-<div class="layout">
-  <aside class="sidebar">
-    <h1><a href="/">デザインWiki</a></h1>
-    <p class="label">タグ: {tag}</p>
-  </aside>
+<h2>タグ一覧</h2>
 
-  <main class="content">
-    <h2>「{tag}」のタグがついた記事</h2>
-
-    {#if articles.length === 0}
-      <p>該当する記事が見つかりませんでした。</p>
-    {:else}
-      <div class="grid">
-        {#each articles as article}
-          <ArticleCard {article} />
-        {/each}
-      </div>
-    {/if}
-  </main>
+<div class="tags">
+  {#each tagData.tags as tag}
+    <a class="tag {tag.class}" href={`/tags/${tag.name}`}>{tag.name}</a>
+  {/each}
 </div>
 
 <style>
-  .layout {
+  h2 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+  }
+
+  .tags {
     display: flex;
-    background-color: #f7f6f3;
-    min-height: 100vh;
+    flex-wrap: wrap;
+    gap: 8px;
   }
 
-  .sidebar {
-    width: 240px;
-    padding: 2rem 1rem 1rem;
-    background-color: #f7f6f3;
-    border-right: 1px solid #eee;
-  }
-
-  .sidebar h1 {
-    font-size: 1.1rem;
-    margin-bottom: 1rem;
-  }
-
-  .label {
-    font-weight: 500;
+  .tag {
+    padding: 4px 10px;
     font-size: 0.85rem;
-    color: #999;
-    margin-bottom: 1rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
   }
 
-  .content {
-    flex-grow: 1;
-    padding: 2rem;
-    background-color: #ffffff;
-    box-sizing: border-box;
-  }
-
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-    margin-top: 1rem;
-  }
+  /* 色は class によって tagColorMap.yaml と連動 */
 </style>
