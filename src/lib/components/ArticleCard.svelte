@@ -1,6 +1,7 @@
 <!-- src/lib/components/ArticleCard.svelte -->
 <script>
   export let article;
+  import { tagColorMap } from '$lib/utils/tagColorMap.js';
 </script>
 
 <a class="card" href={article.url}>
@@ -11,7 +12,7 @@
     <h2>{article.emoji} {article.title}</h2>
     <div class="tags">
       {#each article.tags as tag}
-        <span class="tag">{tag}</span>
+        <span class={"tag " + (tagColorMap[tag] || 'tag--gray')}>{tag}</span>
       {/each}
       {#if article.category}
         <span class="tag category">{article.category}</span>
@@ -52,27 +53,4 @@
     font-weight: 600;
     display: flex;
     align-items: center;
-    gap: 0.25em;
-  }
-
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 6px;
-  }
-
-  .tag {
-    font-size: 0.75rem;
-    background: #eee;
-    border-radius: 6px;
-    padding: 2px 8px;
-    color: #333;
-  }
-
-  .tag.category {
-    background-color: #f5e5db;
-    color: #503c3c;
-    font-weight: bold;
-  }
-</style>
+    gap: 0.
