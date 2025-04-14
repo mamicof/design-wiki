@@ -6,15 +6,8 @@
   const { popularArticles, recentArticles } = data;
 
   const categories = [
-    "デザインシステム",
-    "アクセシビリティ",
-    "マーケティング",
-    "SEO",
-    "リサーチ",
-    "ユーザビリティ",
-    "エンジニアリング",
-    "プロセス",
-    "運用"
+    "デザインシステム", "アクセシビリティ", "マーケティング", "SEO", "リサーチ",
+    "ユーザビリティ", "エンジニアリング", "プロセス", "運用"
   ];
 
   const tags = [
@@ -40,6 +33,11 @@
     <nav>
       <h1><a href="/">デザインWiki</a></h1>
 
+      <!-- 🔍 検索フォームを上部に移動 -->
+      <form action="/search" class="search-form">
+        <input type="text" name="q" placeholder="検索キーワード" />
+      </form>
+
       <p class="label">カテゴリ</p>
       <ul class="menu">
         {#each categories as category}
@@ -53,11 +51,6 @@
           <a class="tag" href={"/tags/" + tag}>{tag}</a>
         {/each}
       </div>
-
-      <p class="label">検索</p>
-      <form action="/search" class="search-form">
-        <input type="text" name="q" placeholder="検索キーワード" />
-      </form>
     </nav>
   </aside>
 
@@ -101,8 +94,19 @@
   }
   .sidebar h1 {
     font-size: 1.1rem;
-    margin: 0 0 1.5rem 0;
-    padding: 0;
+    margin: 0 0 1rem 0;
+  }
+  .search-form {
+    margin-bottom: 1.5rem;
+  }
+  .search-form input[type="text"] {
+    width: 100%;
+    padding: 6px 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    background: #fff;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
   }
   .label {
     font-weight: 500;
@@ -146,15 +150,6 @@
   .tag:hover {
     background-color: #dcdcdc;
   }
-  .search-form input[type="text"] {
-    width: 100%;
-    padding: 6px 10px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 0.85rem;
-    background: #fff;
-    box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
-  }
   .content {
     flex-grow: 1;
     padding: 2rem;
@@ -165,9 +160,6 @@
     padding: 2rem;
     margin-bottom: 2rem;
     border-radius: 12px;
-  }
-  .intro h2 {
-    margin-top: 0;
   }
   .section {
     margin-bottom: 3rem;
