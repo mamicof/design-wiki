@@ -1,12 +1,12 @@
 <script>
-  import tagData from '$lib/data/tagColorMap.yaml';
+  import { tagColorMap } from '$lib/data/tagColorMap.js';
 </script>
 
 <h2>タグ一覧</h2>
 
 <div class="tags">
-  {#each tagData.tags as tag}
-    <a class="tag {tag.class}" href={`/tags/${tag.name}`}>{tag.name}</a>
+  {#each Object.entries(tagColorMap) as [name, className]}
+    <a class="tag {className}" href={`/tags/${name}`}>{name}</a>
   {/each}
 </div>
 
@@ -28,7 +28,57 @@
     border-radius: 8px;
     text-decoration: none;
     font-weight: 500;
+    display: inline-block;
   }
 
-  /* 色は class によって tagColorMap.yaml と連動 */
+  /* タグカラー定義 */
+  .tag--yellow {
+    background-color: #fff7cc;
+    color: #665500;
+  }
+
+  .tag--teal {
+    background-color: #ccf5f5;
+    color: #005555;
+  }
+
+  .tag--blue {
+    background-color: #ddeeff;
+    color: #114488;
+  }
+
+  .tag--red {
+    background-color: #ffe0e0;
+    color: #a33;
+  }
+
+  .tag--green {
+    background-color: #e6f4e6;
+    color: #2b662b;
+  }
+
+  .tag--orange {
+    background-color: #ffe9cc;
+    color: #aa5500;
+  }
+
+  .tag--pink {
+    background-color: #fce6f6;
+    color: #994466;
+  }
+
+  .tag--gray {
+    background-color: #e0e0e0;
+    color: #444;
+  }
+
+  .tag--brown {
+    background-color: #f3e6da;
+    color: #5a3d2b;
+  }
+
+  .tag--purple {
+    background-color: #efe6ff;
+    color: #663399;
+  }
 </style>
