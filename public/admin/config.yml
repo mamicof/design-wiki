@@ -27,3 +27,4 @@ collections:
       - { label: "カテゴリ", name: "category", widget: "select", options: ["デザインシステム", "アクセシビリティ", "マーケティング", "SEO", "リサーチ", "ユーザビリティ", "エンジニアリング", "プロセス", "運用"] }
       - { label: "タグ", name: "tags", widget: "list", default: [] }
       - { label: "本文", name: "body", widget: "markdown" }
+      - { label: "公開ステータス", name: "status", widget: "select", options: ["公開", "非公開", "下書き"], default: "下書き" }
