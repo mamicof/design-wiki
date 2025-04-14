@@ -53,4 +53,39 @@
     font-weight: 600;
     display: flex;
     align-items: center;
-    gap: 0.
+    gap: 0.25em;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 6px;
+  }
+
+  .tag {
+    font-size: 0.75rem;
+    border-radius: 6px;
+    padding: 2px 8px;
+    color: #333;
+    background-color: #eaeaea;
+  }
+
+  .tag.category {
+    background-color: #f5e5db;
+    color: #503c3c;
+    font-weight: bold;
+  }
+
+  /* タグカラー：カスタムカラー対応 */
+  .tag--yellow { background-color: #fff3b0; color: #664d00; }
+  .tag--teal { background-color: #b2f5ea; color: #005e5e; }
+  .tag--blue { background-color: #bee3f8; color: #2a4365; }
+  .tag--green { background-color: #c6f6d5; color: #22543d; }
+  .tag--red { background-color: #fed7d7; color: #742a2a; }
+  .tag--orange { background-color: #fbd38d; color: #7b341e; }
+  .tag--pink { background-color: #fbb6ce; color: #702459; }
+  .tag--purple { background-color: #e9d8fd; color: #553c9a; }
+  .tag--brown { background-color: #e8d8c3; color: #5c3b1c; }
+  .tag--gray { background-color: #e2e8f0; color: #2d3748; }
+</style>
