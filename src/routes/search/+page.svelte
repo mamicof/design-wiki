@@ -15,15 +15,16 @@
 
   $: query = $page.url.searchParams.get('q') || '';
   $: currentPage = parseInt($page.url.searchParams.get('page') || '1');
-
   $: updatePagination();
 
   async function updatePagination() {
     const all = await getArticles();
     articles = all.filter(a =>
-      a.title.includes(query) ||
-      (a.tags && a.tags.some(tag => tag.includes(query))) ||
-      (a.content && a.content.includes(query))
+      a.status !== 'draft' && (
+        a.title.includes(query) ||
+        (a.tags?.some(tag => tag.includes(query))) ||
+        (a.content?.includes(query))
+      )
     );
 
     totalPages = Math.ceil(articles.length / ITEMS_PER_PAGE);
@@ -38,7 +39,6 @@
 </script>
 
 <h1>検索: {query}</h1>
-
 {#if paginatedArticles.length === 0}
   <p>該当する記事が見つかりませんでした。</p>
 {:else}
