@@ -1,3 +1,4 @@
+<!-- src/routes/articles/[slug]/+page.svelte -->
 <script>
   import { page } from '$app/stores';
   import { onMount } from 'svelte';
@@ -9,7 +10,6 @@
 
   let article = null;
   let toc = [];
-
   $: slug = $page.params.slug;
 
   onMount(() => {
@@ -40,7 +40,7 @@
   <title>{article?.title || '記事'}</title>
 </svelte:head>
 
-<div class="layout">
+<div class="article-layout">
   <aside class="toc">
     <h2>目次</h2>
     <ul>
@@ -70,47 +70,96 @@
 </div>
 
 <style>
-  .layout {
+  .article-layout {
     display: flex;
+    flex-direction: row;
     gap: 2rem;
     padding: 2rem;
     background: #fff;
   }
+
   .toc {
-    width: 200px;
-    font-size: 0.9rem;
+    width: 220px;
+    font-size: 0.85rem;
+    background: #f7f7f7;
+    padding: 1rem;
+    border-radius: 12px;
+    height: fit-content;
+    position: sticky;
+    top: 2rem;
   }
+
   .toc h2 {
     font-size: 1rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
   }
+
   .toc ul {
     list-style: none;
     padding: 0;
+    margin: 0;
   }
+
   .toc li {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
+    line-height: 1.4;
   }
+
   .toc-level-2 {
     margin-left: 1rem;
   }
+
   .toc-level-3 {
     margin-left: 2rem;
   }
+
   .article {
-    flex: 1;
+    flex-grow: 1;
+    max-width: 800px;
   }
+
   .breadcrumbs {
     font-size: 0.85rem;
     margin-bottom: 1rem;
     color: #666;
   }
+
+  .article h1 {
+    font-size: 1.6rem;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+  }
+
   .meta {
     margin-top: 3rem;
     font-size: 0.8rem;
     color: #999;
+    border-top: 1px solid #eee;
+    padding-top: 1rem;
   }
-  h1 {
-    margin-top: 0;
+
+  .article :global(h2) {
+    margin-top: 2rem;
+    font-size: 1.25rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.3rem;
+  }
+
+  .article :global(h3) {
+    margin-top: 1.5rem;
+    font-size: 1.1rem;
+    color: #444;
+  }
+
+  .article :global(p) {
+    margin-bottom: 1rem;
+    line-height: 1.8;
+  }
+
+  .article :global(img) {
+    max-width: 100%;
+    border-radius: 6px;
+    margin: 1rem 0;
   }
 </style>
