@@ -20,11 +20,31 @@ collections:
     folder: "content"
     create: true
     slug: "{{slug}}"
+    preview_path: "articles/{{slug}}"
     fields:
       - { label: "タイトル", name: "title", widget: "string" }
       - { label: "アイキャッチ画像", name: "image", widget: "image", required: false }
       - { label: "絵文字", name: "emoji", widget: "string", default: "📝", required: false }
-      - { label: "カテゴリ", name: "category", widget: "select", options: ["デザインシステム", "アクセシビリティ", "マーケティング", "SEO", "リサーチ", "ユーザビリティ", "エンジニアリング", "プロセス", "運用"] }
-      - { label: "タグ", name: "tags", widget: "list", default: [] }
-      - { label: "本文", name: "body", widget: "markdown" }
+      - label: "カテゴリ"
+        name: "category"
+        widget: "select"
+        options:
+          - { label: "デザインシステム", value: "デザインシステム" }
+          - { label: "アクセシビリティ", value: "アクセシビリティ" }
+          - { label: "マーケティング", value: "マーケティング" }
+          - { label: "SEO", value: "SEO" }
+          - { label: "リサーチ", value: "リサーチ" }
+          - { label: "ユーザビリティ", value: "ユーザビリティ" }
+          - { label: "エンジニアリング", value: "エンジニアリング" }
+          - { label: "プロセス", value: "プロセス" }
+          - { label: "運用", value: "運用" }
+      - label: "タグ"
+        name: "tags"
+        widget: "list"
+        default: []
+        allow_add: true
+        summary: "タグ一覧"
+        field:
+          { label: "タグ名", name: "tag", widget: "string" }
       - { label: "公開ステータス", name: "status", widget: "select", options: ["公開", "非公開", "下書き"], default: "下書き" }
+      - { label: "本文", name: "body", widget: "markdown" }
