@@ -2,7 +2,7 @@
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  background-color: #f7f6f3; /* ← ← ← ここ変更：Notion風ベース色に統一 */
+  background-color: #f7f6f3; /* ← Notion風ベース色に統一 */
   color: #333;
   line-height: 1.6;
 }
@@ -11,7 +11,7 @@ body {
 .layout {
   display: flex;
   min-height: 100vh;
-  background-color: #f7f6f3; /* ← ← ← ここ変更：全体背景をsidebarと統一 */
+  background-color: #f7f6f3; /* ← sidebarと統一 */
 }
 
 /* サイドバー */
@@ -69,17 +69,52 @@ body {
 }
 
 .tag {
-  background-color: #eaeaea;
+  display: inline-block;
   padding: 3px 8px;
   border-radius: 6px;
   font-size: 0.75rem;
-  color: #333;
+  font-weight: 500;
   text-decoration: none;
+  color: #333;
+  background-color: #eaeaea;
+  transition: background-color 0.2s ease;
 }
 
 .tag:hover {
-  background-color: #dcdcdc;
+  opacity: 0.8;
   cursor: pointer;
+}
+
+/* タグカラーバリエーション */
+.tag--blue {
+  background-color: #dceefb;
+}
+.tag--red {
+  background-color: #fbd5d5;
+}
+.tag--orange {
+  background-color: #ffe8cc;
+}
+.tag--green {
+  background-color: #dcfce7;
+}
+.tag--yellow {
+  background-color: #fef9c3;
+}
+.tag--pink {
+  background-color: #fce7f3;
+}
+.tag--gray {
+  background-color: #f3f4f6;
+}
+.tag--brown {
+  background-color: #f5e3da;
+}
+.tag--purple {
+  background-color: #ede9fe;
+}
+.tag--teal {
+  background-color: #ccfbf1;
 }
 
 /* 検索フォーム */
