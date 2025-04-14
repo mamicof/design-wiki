@@ -1,40 +1,39 @@
-<!-- src/routes/search/+page.svelte -->
 <script>
-  let keyword = '';
-  let results = [];
+  import { page } from '$app/stores';
+  import { onMount } from 'svelte';
+  import ArticleCard from '$lib/components/ArticleCard.svelte';
+  import { getArticles } from '$lib/utils/articleUtils';
 
-  const allArticles = [
-    { title: 'UIの基本', href: '/articles/ui-basics' },
-    { title: 'アクセシビリティ改善', href: '/articles/a11y' },
-    { title: 'UXとは', href: '/articles/what-is-ux' },
-  ];
+  let query = '';
+  let articles = [];
 
-  const search = () => {
-    if (!keyword.trim()) {
-      results = [];
-      return;
-    }
-    results = allArticles.filter(article =>
-      article.title.toLowerCase().includes(keyword.toLowerCase())
+  $: query = $page.url.searchParams.get('q') || '';
+
+  onMount(async () => {
+    const all = await getArticles();
+    articles = all.filter(a =>
+      a.title.includes(query) ||
+      (a.tags && a.tags.some(tag => tag.includes(query))) ||
+      (a.content && a.content.includes(query))
     );
-  };
+  });
 </script>
 
-<h1>検索</h1>
-
-<input
-  type="text"
-  bind:value={keyword}
-  placeholder="キーワードを入力"
-  on:input={search}
-/>
-
-{#if results.length > 0}
-  <ul>
-    {#each results as result}
-      <li><a href={result.href}>{result.title}</a></li>
+<h1>検索: {query}</h1>
+<div class="grid">
+  {#if articles.length === 0}
+    <p>該当する記事が見つかりませんでした。</p>
+  {:else}
+    {#each articles as article}
+      <ArticleCard {article} />
     {/each}
-  </ul>
-{:else if keyword}
-  <p>該当する記事が見つかりませんでした。</p>
-{/if}
+  {/if}
+</div>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+</style>
