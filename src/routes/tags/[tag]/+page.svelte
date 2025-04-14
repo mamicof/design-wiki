@@ -9,7 +9,7 @@
 
   onMount(async () => {
     const all = await getArticles();
-    articles = all.filter(a => a.tags && a.tags.includes(tag));
+    articles = all.filter(a => a.tags?.includes(tag) && a.status !== 'draft');
   });
 </script>
 
