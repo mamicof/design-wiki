@@ -1,10 +1,23 @@
-- color: '#AED9E0'
-  name: アクセシビリティ
-- color: '#FEE1E8'
-  name: フォーム
-- color: '#FFF1C1'
-  name: UIパターン
-- color: '#C3FBD8'
-  name: SEO
-- color: '#DAD4EF'
-  name: ローディング
+tags:
+  - name: "カラー"
+    class: "tag--yellow"
+  - name: "入力フォーム"
+    class: "tag--teal"
+  - name: "UI"
+    class: "tag--blue"
+  - name: "UX"
+    class: "tag--red"
+  - name: "命名規則"
+    class: "tag--green"
+  - name: "コンポーネント"
+    class: "tag--orange"
+  - name: "マーケティング"
+    class: "tag--pink"
+  - name: "インラタクション"
+    class: "tag--gray"
+  - name: "デザインプロセス"
+    class: "tag--brown"
+  - name: "フォント・テキスト"
+    class: "tag--purple"
+  - name: "レイアウト"
+    class: "tag--blue"
