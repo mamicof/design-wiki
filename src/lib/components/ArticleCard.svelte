@@ -1,4 +1,4 @@
-<!-- src/lib/ArticleCard.svelte -->
+<!-- src/lib/components/ArticleCard.svelte -->
 <script>
   export let article;
 </script>
@@ -13,6 +13,9 @@
       {#each article.tags as tag}
         <span class="tag">{tag}</span>
       {/each}
+      {#if article.category}
+        <span class="tag category">{article.category}</span>
+      {/if}
     </div>
   </div>
 </a>
@@ -28,31 +31,48 @@
     color: inherit;
     transition: transform 0.15s ease;
   }
+
   .card:hover {
     transform: translateY(-2px);
   }
+
   .thumb {
     width: 100%;
     height: 140px;
     object-fit: cover;
   }
+
   .card-content {
     padding: 1rem;
   }
+
   h2 {
     font-size: 1rem;
     margin: 0 0 0.5rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.25em;
   }
+
   .tags {
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
+    margin-top: 6px;
   }
+
   .tag {
     font-size: 0.75rem;
-    background: #f2f2f2;
+    background: #eee;
     border-radius: 6px;
     padding: 2px 8px;
     color: #333;
+  }
+
+  .tag.category {
+    background-color: #f5e5db;
+    color: #503c3c;
+    font-weight: bold;
   }
 </style>
