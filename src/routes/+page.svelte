@@ -22,37 +22,4 @@
   </section>
 
   <section class="section">
-    <h2>最近追加した記事</h2>
-    <div class="grid">
-      {#each recentArticles as article}
-        <ArticleCard {article} />
-      {/each}
-    </div>
-  </section>
-</main>
-
-<style>
-  .content {
-    flex-grow: 1;
-    padding: 2rem;
-    background-color: #ffffff;
-    box-sizing: border-box;
-  }
-
-  .intro {
-    background: #f3f3f3;
-    padding: 2rem;
-    margin-bottom: 2rem;
-    border-radius: 12px;
-  }
-
-  .section {
-    margin-bottom: 3rem;
-  }
-
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-  }
-</style>
+    <h2>最近追加した記事</h
