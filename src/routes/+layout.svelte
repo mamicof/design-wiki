@@ -80,7 +80,7 @@
   }
 
   .nav-link-group {
-    margin-bottom: 16px;
+    margin-bottom: 8px;
   }
 
   .title {
@@ -88,8 +88,8 @@
     font-size: 14px;
     display: block;
     padding: 4px 16px;
-    height: 30px;
-    line-height: 30px;
+    height: 36px;
+    line-height: 36px;
     border-radius: 6px;
     color: #333;
     text-decoration: none;
@@ -105,13 +105,14 @@
   }
 
   .search-form input[type="text"] {
-    width: 100%;
+    width: calc(100% - 2px);
     padding: 6px 10px;
     font-size: 13px;
     border-radius: 6px;
     border: 1px solid #ccc;
     box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
     background-color: #fff;
+    box-sizing: border-box;
   }
 
   .label {
@@ -139,8 +140,8 @@
     padding: 0 16px;
     margin: 0 8px;
     font-size: 14px;
-    height: 28px;
-    line-height: 28px;
+    height: 30px;
+    line-height: 30px;
     border-radius: 6px;
     text-decoration: none;
     color: #333;
