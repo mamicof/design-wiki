@@ -2,28 +2,29 @@
   import "../styles/global.css";
 
   const categories = [
+    "デザインプロセス",
+    "UX設計",
+    "UI設計",
     "デザインシステム",
     "アクセシビリティ",
-    "マーケティング",
-    "SEO",
     "リサーチ",
-    "ユーザビリティ",
-    "エンジニアリング",
-    "プロセス",
-    "運用"
+    "Figma",
+    "HTML/CSS",
+    "運用",
+    "マーケティング",
+    "勉強方法",
+    "ツール置き場",
+    "参考リンク集"
   ];
 
   const tags = [
-    "色", "入力", "フォーム", "alt", "画面", "階層", "アコーディオン",
-    "トグル", "モーダル", "UIパターン", "表記", "ABテスト", "検索避け",
-    "画面数", "UX", "SEO", "リキャプチャ", "通知", "リンク", "FAB",
-    "フォント", "カーニング", "ロゴ", "画像", "OGP", "コンポーネント",
-    "ローディング", "スケルトン", "アイコン", "パンくず", "ユーザータイプ"
+    "カラー", "入力フォーム", "UI", "UX", "命名規則", "コンポーネント",
+    "マーケティング", "インラタクション", "デザインプロセス",
+    "フォント・テキスト", "レイアウト"
   ];
 </script>
 
 <svelte:head>
-  <!-- 検索避け & OGP無効化 -->
   <meta name="robots" content="noindex, nofollow" />
   <meta property="og:title" content="no-title" />
   <meta property="og:type" content="website" />
@@ -35,12 +36,18 @@
 <div class="layout">
   <aside class="sidebar">
     <nav>
-      <h1><a href="/">デザインWiki</a></h1>
+      <div class="nav-link-group">
+        <a class="menu-link title" href="/">デザインWiki</a>
+      </div>
+
+      <form action="/search" class="search-form">
+        <input type="text" name="q" placeholder="検索..." />
+      </form>
 
       <p class="label">カテゴリ</p>
-      <ul>
+      <ul class="menu">
         {#each categories as category}
-          <li><a href={"/category/" + category}>{category}</a></li>
+          <li><a class="menu-link" href={"/category/" + category}>{category}</a></li>
         {/each}
       </ul>
 
@@ -50,13 +57,9 @@
           <a class="tag" href={"/tags/" + tag}>{tag}</a>
         {/each}
       </div>
-
-      <p class="label">検索</p>
-      <form action="/search">
-        <input type="text" name="q" placeholder="キーワードを入力" />
-      </form>
     </nav>
   </aside>
+
   <main class="content">
     <slot />
   </main>
@@ -65,61 +68,115 @@
 <style>
   .layout {
     display: flex;
-    background-color: #f7f7f5;
+    background-color: #f7f6f3;
     min-height: 100vh;
   }
+
   .sidebar {
     width: 240px;
-    padding: 2rem;
+    padding: 24px 8px 16px;
     background-color: #f9f8f6;
-    border-right: 1px solid #eee;
+    box-sizing: border-box;
   }
-  .sidebar h1 {
-    font-size: 1.2rem;
-    margin-bottom: 1.5rem;
+
+  .nav-link-group {
+    margin-bottom: 24px;
   }
-  .sidebar .label {
-    font-weight: bold;
-    font-size: 0.95rem;
-    margin: 1rem 0 0.5rem;
-    color: #444;
-  }
-  .sidebar ul {
-    list-style: none;
-    padding: 0;
-  }
-  .sidebar li {
-    margin-bottom: 0.8rem;
-  }
-  .sidebar a {
+
+  .title {
+    font-weight: 500;
+    font-size: 14px;
+    display: block;
+    padding: 4px 16px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 6px;
     color: #333;
     text-decoration: none;
-    padding: 4px 8px;
-    border-radius: 4px;
-    display: inline-block;
   }
-  .sidebar a:hover {
-    background-color: #f0f0f0;
+
+  .title:hover {
+    background-color: #ececec;
   }
+
+  .search-form {
+    padding: 0 16px;
+    margin-bottom: 24px;
+  }
+
+  .search-form input[type="text"] {
+    width: 100%;
+    padding: 6px 10px;
+    font-size: 13px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
+    background-color: #fff;
+  }
+
+  .label {
+    font-size: 12px;
+    color: #888;
+    font-weight: 500;
+    padding: 0 16px;
+    height: 30px;
+    line-height: 30px;
+    margin-top: 20px;
+  }
+
+  .menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .menu li {
+    margin: 0;
+  }
+
+  .menu-link {
+    display: block;
+    padding: 4px 16px;
+    margin: 0;
+    font-size: 14px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #333;
+    transition: background-color 0.2s ease;
+  }
+
+  .menu-link:hover {
+    background-color: #ececec;
+  }
+
   .tags {
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
-    margin-bottom: 1rem;
+    padding: 0 16px;
+    margin-top: 8px;
   }
+
   .tag {
-    background-color: #f1f1f1;
+    background-color: #eaeaea;
     padding: 4px 8px;
     border-radius: 6px;
-    font-size: 0.8rem;
-    color: #333;
+    font-size: 0.75rem;
     text-decoration: none;
+    color: #333;
+    transition: background-color 0.2s ease;
   }
+
   .tag:hover {
-    background-color: #e0e0e0;
+    background-color: #dcdcdc;
   }
+
   .content {
     flex-grow: 1;
+    background-color: #ffffff;
     padding: 2rem;
+    box-sizing: border-box;
   }
 </style>
