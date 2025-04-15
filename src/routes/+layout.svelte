@@ -74,17 +74,17 @@
 
   .sidebar {
     width: 240px;
-    padding: 24px 8px 16px;
+    padding: 16px 8px 16px;
     background-color: #f9f8f6;
     box-sizing: border-box;
   }
 
   .nav-link-group {
-    margin-bottom: 24px;
+    margin-bottom: 16px;
   }
 
   .title {
-    font-weight: 500;
+    font-weight: bold;
     font-size: 14px;
     display: block;
     padding: 4px 16px;
@@ -117,7 +117,7 @@
   .label {
     font-size: 12px;
     color: #888;
-    font-weight: 500;
+    font-weight: bold;
     padding: 0 16px;
     height: 30px;
     line-height: 30px;
@@ -136,11 +136,11 @@
 
   .menu-link {
     display: block;
-    padding: 4px 16px;
-    margin: 0;
+    padding: 0 16px;
+    margin: 0 8px;
     font-size: 14px;
-    height: 30px;
-    line-height: 30px;
+    height: 28px;
+    line-height: 28px;
     border-radius: 6px;
     text-decoration: none;
     color: #333;
