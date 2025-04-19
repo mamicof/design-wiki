@@ -3,22 +3,20 @@
 </script>
 
 <a class="card" href={`/articles/${article.slug}`}>
-  <div class="card-content">
-    <div class="title-row">
-      {#if article.emoji}
-        <span class="emoji">{article.emoji}</span>
-      {/if}
-      <span class="title">{article.title}</span>
-    </div>
+  <div class="card-title">
+    {#if article.emoji}
+      <span class="emoji">{article.emoji}</span>
+    {/if}
+    {article.title}
+  </div>
 
-    <div class="tags">
-      {#each article.tags as tag}
-        <span class="tag">{tag}</span>
-      {/each}
-      {#if article.category}
-        <span class="tag category">{article.category}</span>
-      {/if}
-    </div>
+  <div class="tag-row">
+    {#each article.tags as tag}
+      <span class="tag">{tag}</span>
+    {/each}
+    {#if article.category}
+      <span class="tag category">{article.category}</span>
+    {/if}
   </div>
 </a>
 
@@ -27,51 +25,46 @@
     display: block;
     padding: 1rem;
     border-radius: 12px;
-    border: 1px solid #eaeaea;
+    border: 1px solid #eee;
     background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
     text-decoration: none;
     transition: box-shadow 0.2s ease, transform 0.1s ease;
     color: #333;
   }
 
   .card:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
     transform: translateY(-2px);
   }
 
-  .card-content {
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-  }
-
-  .title-row {
+  .card-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+    line-height: 1.4;
+    color: #333;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    font-size: 0.95rem;
-    font-weight: 600;
-    line-height: 1.4;
+    gap: 0.4rem;
   }
 
   .emoji {
     font-size: 1.2rem;
   }
 
-  .tags {
+  .tag-row {
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
   }
 
   .tag {
-    background-color: #f2f2f2;
-    padding: 2px 8px;
     font-size: 0.7rem;
+    padding: 2px 8px;
     border-radius: 6px;
-    line-height: 1.4;
-    color: #444;
+    background: #f1f1f1;
+    color: #333;
   }
 
   .tag.category {
