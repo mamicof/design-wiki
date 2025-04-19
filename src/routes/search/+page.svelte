@@ -20,26 +20,44 @@
   $: filteredArticles = articles.filter(filterByStatus);
 </script>
 
-<h2>検索結果</h2>
+<main class="content">
+  <h2>検索結果</h2>
 
-<div class="filter-controls">
-  <label class="label">ステータスで絞り込み</label>
-  <select bind:value={statusFilter}>
-    <option value="all">すべて</option>
-    <option value="published">公開</option>
-    <option value="draft">下書き</option>
-  </select>
-</div>
+  <div class="filter-controls">
+    <label class="label">ステータスで絞り込み</label>
+    <select bind:value={statusFilter}>
+      <option value="all">すべて</option>
+      <option value="published">公開</option>
+      <option value="draft">下書き</option>
+    </select>
+  </div>
 
-<div class="grid">
-  {#each filteredArticles as article}
-    <ArticleCard {article} />
-  {/each}
-</div>
+  {#if filteredArticles.length === 0}
+    <p>該当する記事は見つかりませんでした。</p>
+  {:else}
+    <div class="grid">
+      {#each filteredArticles as article}
+        <ArticleCard {article} />
+      {/each}
+    </div>
+  {/if}
+</main>
 
 <style>
+  .content {
+    flex-grow: 1;
+    padding: 2rem;
+    background-color: #ffffff;
+    box-sizing: border-box;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+
   .filter-controls {
-    margin: 1rem 0 1.5rem;
+    margin-bottom: 1.5rem;
   }
 
   .label {
@@ -52,6 +70,7 @@
 
   select {
     width: 100%;
+    max-width: 240px;
     padding: 6px 10px;
     font-size: 0.85rem;
     border-radius: 6px;
@@ -62,6 +81,5 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1.5rem;
-    margin-top: 1.5rem;
   }
 </style>
