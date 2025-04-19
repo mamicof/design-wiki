@@ -24,7 +24,8 @@
   .card {
     display: block;
     padding: 1rem;
-    max-width: 320px;
+    width: 100%;
+    max-width: 100%;
     border-radius: 12px;
     border: 1px solid #eee;
     background-color: #fff;
