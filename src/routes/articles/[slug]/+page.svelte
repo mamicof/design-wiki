@@ -13,11 +13,13 @@
   async function loadArticle(slug) {
     try {
       const indexRes = await fetch(`${base}/content/index.json`);
+      if (!indexRes.ok) throw new Error(`index.json fetch failed: ${indexRes.status}`);
       const index = await indexRes.json();
       const item = index.find((a) => a.slug === slug);
       if (!item) throw error(404, '記事が見つかりません');
 
       const res = await fetch(`${base}${item.path}`);
+      if (!res.ok) throw new Error(`markdown fetch failed: ${res.status}`);
       const text = await res.text();
 
       // frontmatter抽出
@@ -53,7 +55,8 @@
       const html = marked(body, { renderer });
       article = { ...data, content: html };
     } catch (err) {
-      throw error(500, '読み込みエラー');
+      console.error('記事読み込みエラー:', err);
+      throw error(500, '記事の読み込み中にエラーが発生しました');
     }
   }
 
