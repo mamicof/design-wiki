@@ -1,10 +1,11 @@
+<!-- src/routes/search/+page.svelte -->
 <script>
   import { onMount } from 'svelte';
   import ArticleCard from '$lib/components/ArticleCard.svelte';
   import { getArticles } from '$lib/utils/articleUtils';
 
   let articles = [];
-  let statusFilter = "all"; // "all", "published", "draft"
+  let statusFilter = "all";
 
   onMount(async () => {
     articles = await getArticles();
