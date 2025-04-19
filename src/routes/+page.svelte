@@ -1,3 +1,4 @@
+<!-- design-wiki/src/routes/+page.svelte -->
 <script>
   import "../styles/global.css";
   import ArticleCard from '$lib/components/ArticleCard.svelte';
@@ -70,5 +71,6 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1.5rem;
+    align-items: start;
   }
 </style>
