@@ -4,17 +4,19 @@
   import ArticleCard from '$lib/components/ArticleCard.svelte';
   import { getArticles } from '$lib/utils/articleUtils';
 
-  let articles = [];
   let filteredArticles = [];
   $: tag = $page.params.tag;
 
   onMount(async () => {
     const all = await getArticles();
 
-    // タグ名を小文字＆トリミングして比較
-    filteredArticles = all.filter(a => {
-      if (!Array.isArray(a.tags)) return false;
-      return a.tags.some(t => t.trim().toLowerCase() === tag.trim().toLowerCase());
+    // 比較用に normalize + lowercase + trim
+    const normalize = (str) => str?.normalize('NFKC').trim().toLowerCase();
+    const normalizedTag = normalize(tag);
+
+    filteredArticles = all.filter(article => {
+      if (!Array.isArray(article.tags)) return false;
+      return article.tags.some(t => normalize(t) === normalizedTag);
     });
   });
 </script>
