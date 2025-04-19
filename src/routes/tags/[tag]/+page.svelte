@@ -1,3 +1,4 @@
+<!-- src/routes/tags/[tag]/+page.svelte -->
 <script>
   import ArticleCard from '$lib/components/ArticleCard.svelte';
   export let data;
