@@ -8,17 +8,19 @@
   let filteredArticles = [];
   $: tag = $page.params.tag;
 
+  const normalize = (str) => str?.normalize('NFKC').trim().toLowerCase();
+
   onMount(async () => {
     all = await getArticles();
+  });
 
-    const normalize = (str) => str?.normalize('NFKC').trim().toLowerCase();
+  $: if (all.length > 0 && tag) {
     const normalizedTag = normalize(tag);
-
     filteredArticles = all.filter(article => {
       if (!Array.isArray(article.tags)) return false;
       return article.tags.some(t => normalize(t) === normalizedTag);
     });
-  });
+  }
 </script>
 
 <h2>タグ「{tag}」の記事一覧</h2>
