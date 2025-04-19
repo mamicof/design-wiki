@@ -1,47 +1,179 @@
-// design-wiki/src/routes/articles/[slug]/+page.js
+<!-- src/routes/articles/[slug]/+page.svelte -->
+<script>
+  import { page } from '$app/stores';
+  import { error } from '@sveltejs/kit';
+  import { onMount } from 'svelte';
+  import { marked } from 'marked';
 
-/**
- * 記事1件を取得（fetchベース）
- */
-export async function load({ params }) {
-  const slug = params.slug;
-  const path = `/content/${slug}.md`;
+  let article = null;
+  let toc = [];
+  $: slug = $page.params.slug;
 
-  const res = await fetch(path);
-  if (!res.ok) {
-    return {
-      status: 404,
-      error: new Error('記事が見つかりません')
+  onMount(async () => {
+    const res = await fetch(`/content/${slug}.md`);
+    if (!res.ok) {
+      throw error(404, '記事が見つかりません');
+    }
+    const raw = await res.text();
+
+    const frontmatterRegex = /^---\n([\s\S]*?)\n---/;
+    const match = raw.match(frontmatterRegex);
+    const rawMeta = match?.[1] || '';
+    const body = raw.replace(frontmatterRegex, '').trim();
+
+    const data = {};
+    for (const line of rawMeta.split('\n')) {
+      const [key, ...rest] = line.split(':');
+      const value = rest.join(':').trim();
+      if (key === 'tags') {
+        data.tags = value
+          .replace(/^\[|\]$/g, '')
+          .split(',')
+          .map((t) => t.trim().replace(/^"|"$/g, ''));
+      } else {
+        data[key.trim()] = value.replace(/^"|"$/g, '');
+      }
+    }
+
+    const renderer = new marked.Renderer();
+    renderer.heading = (text, level) => {
+      if (level <= 3) {
+        const id = text.toLowerCase().replace(/[^\w]+/g, '-');
+        toc.push({ text, id, level });
+        return `<h${level} id="${id}">${text}</h${level}>`;
+      }
+      return `<h${level}>${text}</h${level}>`;
     };
+
+    const html = marked(body, { renderer });
+    article = { ...data, content: html };
+  });
+</script>
+
+<svelte:head>
+  <title>{article?.title || '記事'}</title>
+</svelte:head>
+
+<div class="article-layout">
+  <aside class="toc">
+    <h2>目次</h2>
+    <ul>
+      {#each toc as item}
+        <li class={"toc-level-" + item.level}>
+          <a href={"#" + item.id}>{item.text}</a>
+        </li>
+      {/each}
+    </ul>
+  </aside>
+
+  <main class="article">
+    <nav class="breadcrumbs">
+      <a href="/">TOP</a> &gt; <a href="/articles">記事一覧</a> &gt; {article?.title}
+    </nav>
+
+    <h1>{article?.emoji} {article?.title}</h1>
+    {@html article?.content}
+
+    <footer class="meta">
+      <p>公開日: {article?.date}</p>
+      {#if article?.updated}
+        <p>更新日: {article.updated}</p>
+      {/if}
+    </footer>
+  </main>
+</div>
+
+<style>
+  .article-layout {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    padding: 2rem;
+    background: #fff;
   }
 
-  const raw = await res.text();
-
-  // frontmatter抽出
-  const frontmatterRegex = /^---\n([\s\S]*?)\n---/;
-  const match = raw.match(frontmatterRegex);
-  const rawMeta = match?.[1] || '';
-  const body = raw.replace(frontmatterRegex, '').trim();
-
-  const data = {};
-  for (const line of rawMeta.split('\n')) {
-    const [key, ...rest] = line.split(':');
-    const value = rest.join(':').trim();
-    if (key === 'tags') {
-      data.tags = value
-        .replace(/^\[|\]$/g, '')
-        .split(',')
-        .map((t) => t.trim().replace(/^"|"$/g, ''));
-    } else {
-      data[key.trim()] = value.replace(/^"|"$/g, '');
-    }
+  .toc {
+    width: 220px;
+    font-size: 0.85rem;
+    background: #f7f7f7;
+    padding: 1rem;
+    border-radius: 12px;
+    height: fit-content;
+    position: sticky;
+    top: 2rem;
   }
 
-  return {
-    article: {
-      ...data,
-      slug,
-      content: body
-    }
-  };
-}
+  .toc h2 {
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+  }
+
+  .toc ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .toc li {
+    margin-bottom: 0.4rem;
+    line-height: 1.4;
+  }
+
+  .toc-level-2 {
+    margin-left: 1rem;
+  }
+
+  .toc-level-3 {
+    margin-left: 2rem;
+  }
+
+  .article {
+    flex-grow: 1;
+    max-width: 800px;
+  }
+
+  .breadcrumbs {
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+    color: #666;
+  }
+
+  .article h1 {
+    font-size: 1.6rem;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+  }
+
+  .meta {
+    margin-top: 3rem;
+    font-size: 0.8rem;
+    color: #999;
+    border-top: 1px solid #eee;
+    padding-top: 1rem;
+  }
+
+  .article :global(h2) {
+    margin-top: 2rem;
+    font-size: 1.25rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.3rem;
+  }
+
+  .article :global(h3) {
+    margin-top: 1.5rem;
+    font-size: 1.1rem;
+    color: #444;
+  }
+
+  .article :global(p) {
+    margin-bottom: 1rem;
+    line-height: 1.8;
+  }
+
+  .article :global(img) {
+    max-width: 100%;
+    border-radius: 6px;
+    margin: 1rem 0;
+  }
+</style>
