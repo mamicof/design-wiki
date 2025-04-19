@@ -12,7 +12,7 @@
 
   async function loadArticle(slug) {
     try {
-      if (!slug) return;
+      if (!slug || typeof window === 'undefined') return;
 
       const indexRes = await fetch(`${base}/content/index.json`);
       if (!indexRes.ok) throw new Error(`index.json fetch failed: ${indexRes.status}`);
