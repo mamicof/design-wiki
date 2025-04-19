@@ -6,7 +6,12 @@
 
 <div class="tags">
   {#each Object.entries(tagColorMap) as [name, className]}
-    <a class="tag {className}" href={`/tags/${name}`}>{name}</a>
+    <a
+      class="tag {className}"
+      href={`/tags/${encodeURIComponent(name)}`}
+    >
+      {name}
+    </a>
   {/each}
 </div>
 
@@ -29,6 +34,11 @@
     text-decoration: none;
     font-weight: 500;
     display: inline-block;
+    transition: background-color 0.2s ease;
+  }
+
+  .tag:hover {
+    opacity: 0.9;
   }
 
   /* タグカラー定義 */
