@@ -5,7 +5,7 @@ import matter from 'gray-matter';
  * 記事一覧を取得（公開のみ）
  */
 export async function getArticles() {
-  const files = import.meta.glob('../../content/*.md', {
+  const files = import.meta.glob('/content/*.md', {
     query: '?raw',
     import: 'default'
   });
