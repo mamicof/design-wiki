@@ -8,10 +8,12 @@
 
   let article = null;
   let toc = [];
-  $: slug = $page.params.slug;
+  $: slug = $page?.params?.slug || '';
 
   async function loadArticle(slug) {
     try {
+      if (!slug) return;
+
       const indexRes = await fetch(`${base}/content/index.json`);
       if (!indexRes.ok) throw new Error(`index.json fetch failed: ${indexRes.status}`);
       const index = await indexRes.json();
@@ -59,12 +61,12 @@
       article = { ...data, content: html };
     } catch (err) {
       console.error('記事読み込みエラー:', err);
-      throw error(500, '記事の読み込み中にエラーが発生しました');
+      article = null; // fallback にしてトップページ表示を妨げない
     }
   }
 
   onMount(() => {
-    loadArticle(slug);
+    if (slug) loadArticle(slug);
   });
 </script>
 
@@ -72,6 +74,7 @@
   <title>{article?.title || '記事'}</title>
 </svelte:head>
 
+{#if article}
 <div class="article-layout">
   <aside class="toc">
     <h2>目次</h2>
@@ -100,6 +103,9 @@
     </footer>
   </main>
 </div>
+{:else}
+<p style="padding: 2rem; color: #666">記事が読み込まれていません。</p>
+{/if}
 
 <style>
   .article-layout {
