@@ -1,58 +1,63 @@
 <!-- src/routes/articles/[slug]/+page.svelte -->
 <script>
   import { page } from '$app/stores';
+  import { error } from '@sveltejs/kit';
   import { onMount } from 'svelte';
   import { marked } from 'marked';
 
   let article = null;
   let toc = [];
-
   $: slug = $page.params.slug;
 
-  onMount(async () => {
-    const indexRes = await fetch('/content/index.json');
-    const index = await indexRes.json();
-    const matched = index.find(item => item.slug === slug);
+  async function loadArticle(slug) {
+    try {
+      const indexRes = await fetch('/content/index.json');
+      const index = await indexRes.json();
+      const item = index.find((a) => a.slug === slug);
+      if (!item) throw error(404, '記事が見つかりません');
 
-    if (!matched) {
-      article = { title: '記事が見つかりません', content: '', date: '', emoji: '❌' };
-      return;
-    }
+      const res = await fetch(item.path);
+      const text = await res.text();
 
-    const res = await fetch(matched.path);
-    const text = await res.text();
+      // frontmatter抽出
+      const frontmatterRegex = /^---\n([\s\S]*?)\n---/;
+      const match = text.match(frontmatterRegex);
+      const rawMeta = match?.[1] || '';
+      const body = text.replace(frontmatterRegex, '').trim();
 
-    const frontmatterRegex = /^---\n([\s\S]*?)\n---/;
-    const match = text.match(frontmatterRegex);
-    const rawMeta = match?.[1] || '';
-    const body = text.replace(frontmatterRegex, '').trim();
-
-    const data = {};
-    for (const line of rawMeta.split('\n')) {
-      const [key, ...rest] = line.split(':');
-      const value = rest.join(':').trim();
-      if (key === 'tags') {
-        data.tags = value
-          .replace(/^\[|\]$/g, '')
-          .split(',')
-          .map(t => t.trim().replace(/^"|"$/g, ''));
-      } else {
-        data[key.trim()] = value.replace(/^"|"$/g, '');
+      const data = {};
+      for (const line of rawMeta.split('\n')) {
+        const [key, ...rest] = line.split(':');
+        const value = rest.join(':').trim();
+        if (key === 'tags') {
+          data.tags = value
+            .replace(/^\[|\]$/g, '')
+            .split(',')
+            .map((t) => t.trim().replace(/^"|"$/g, ''));
+        } else {
+          data[key.trim()] = value.replace(/^"|"$/g, '');
+        }
       }
+
+      const renderer = new marked.Renderer();
+      renderer.heading = (text, level) => {
+        if (level <= 3) {
+          const id = text.toLowerCase().replace(/[^\w]+/g, '-');
+          toc.push({ text, id, level });
+          return `<h${level} id="${id}">${text}</h${level}>`;
+        }
+        return `<h${level}>${text}</h${level}>`;
+      };
+
+      const html = marked(body, { renderer });
+      article = { ...data, content: html };
+    } catch (err) {
+      throw error(500, '読み込みエラー');
     }
+  }
 
-    const renderer = new marked.Renderer();
-    renderer.heading = (text, level) => {
-      if (level <= 3) {
-        const id = text.toLowerCase().replace(/[^\w]+/g, '-');
-        toc.push({ text, id, level });
-        return `<h${level} id="${id}">${text}</h${level}>`;
-      }
-      return `<h${level}>${text}</h${level}>`;
-    };
-
-    const html = marked(body, { renderer });
-    article = { ...data, content: html };
+  onMount(() => {
+    loadArticle(slug);
   });
 </script>
 
