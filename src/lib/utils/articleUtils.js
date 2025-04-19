@@ -1,32 +1,48 @@
-// src/lib/utils/articleUtils.js
-import matter from 'gray-matter';
+//  design-wiki/src/lib/utils/articleUtils.js
 
 /**
- * 記事一覧を取得（公開のみ）
+ * 記事一覧を取得（static/content/*.md を fetch で読み込む）
  */
 export async function getArticles() {
-  const files = import.meta.glob('/content/*.md', {
-    query: '?raw',
-    import: 'default'
-  });
+  const indexRes = await fetch('/content/index.json');
+  const index = await indexRes.json();
 
-  const articles = [];
+  const articles = await Promise.all(
+    index.map(async ({ slug, path }) => {
+      const res = await fetch(path);
+      const text = await res.text();
 
-  for (const path in files) {
-    const slug = path.split('/').pop().replace('.md', '');
-    const content = await files[path]();
-    const { data, content: body } = matter(content);
+      // frontmatter抽出
+      const frontmatterRegex = /^---\n([\s\S]*?)\n---/;
+      const match = text.match(frontmatterRegex);
+      const rawMeta = match?.[1] || '';
+      const body = text.replace(frontmatterRegex, '').trim();
 
-    if (data.status !== '公開') continue;
+      const data = {};
+      for (const line of rawMeta.split('\n')) {
+        const [key, ...rest] = line.split(':');
+        const value = rest.join(':').trim();
+        if (key === 'tags') {
+          data.tags = value
+            .replace(/^\[|\]$/g, '')
+            .split(',')
+            .map((t) => t.trim().replace(/^"|"$/g, ''));
+        } else {
+          data[key.trim()] = value.replace(/^"|"$/g, '');
+        }
+      }
 
-    articles.push({
-      ...data,
-      slug,
-      content: body
-    });
-  }
+      if (data.status !== '公開') return null;
 
-  return articles.sort((a, b) => new Date(b.date) - new Date(a.date));
+      return {
+        ...data,
+        slug,
+        content: body
+      };
+    })
+  );
+
+  return articles.filter(Boolean).sort((a, b) => new Date(b.date) - new Date(a.date));
 }
 
 /**
