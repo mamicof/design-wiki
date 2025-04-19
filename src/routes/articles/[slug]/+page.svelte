@@ -1,31 +1,27 @@
 <!-- src/routes/articles/[slug]/+page.svelte -->
 <script>
   import { page } from '$app/stores';
+  import { error } from '@sveltejs/kit';
   import { onMount } from 'svelte';
   import { marked } from 'marked';
+  import { base } from '$app/paths';
 
   let article = null;
   let toc = [];
+  $: slug = $page.params.slug;
 
-  let slug;
-  $: page.subscribe((p) => {
-    slug = p.params.slug;
-  });
-
-  onMount(async () => {
+  async function loadArticle(slug) {
     try {
-      const indexRes = await fetch('/content/index.json');
+      const indexRes = await fetch(`${base}/content/index.json`);
+      if (!indexRes.ok) throw new Error(`index.json fetch failed: ${indexRes.status}`);
       const index = await indexRes.json();
       const item = index.find((a) => a.slug === slug);
-      if (!item) {
-        console.error(`記事が見つかりません: slug=${slug}`);
-        return;
-      }
+      if (!item) throw error(404, '記事が見つかりません');
 
-      const res = await fetch(item.path);
+      const res = await fetch(`${base}${item.path}`);
+      if (!res.ok) throw new Error(`markdown fetch failed: ${res.status}`);
       const text = await res.text();
 
-      // frontmatterのパース
       const frontmatterRegex = /^---\n([\s\S]*?)\n---/;
       const match = text.match(frontmatterRegex);
       const rawMeta = match?.[1] || '';
@@ -59,7 +55,12 @@
       article = { ...data, content: html };
     } catch (err) {
       console.error('記事読み込みエラー:', err);
+      throw error(500, '記事の読み込み中にエラーが発生しました');
     }
+  }
+
+  onMount(() => {
+    loadArticle(slug);
   });
 </script>
 
