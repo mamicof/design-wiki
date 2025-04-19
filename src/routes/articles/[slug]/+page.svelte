@@ -32,10 +32,14 @@
         const [key, ...rest] = line.split(':');
         const value = rest.join(':').trim();
         if (key === 'tags') {
-          data.tags = value
-            .replace(/^\[|\]$/g, '')
-            .split(',')
-            .map((t) => t.trim().replace(/^"|"$/g, ''));
+          try {
+            data.tags = JSON.parse(value);
+          } catch {
+            data.tags = value
+              .replace(/^\[|\]$/g, '')
+              .split(',')
+              .map((t) => t.trim().replace(/^"|"$/g, ''));
+          }
         } else {
           data[key.trim()] = value.replace(/^"|"$/g, '');
         }
