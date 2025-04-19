@@ -11,10 +11,10 @@
   onMount(async () => {
     const all = await getArticles();
 
-    // 全記事から、タグにマッチするものだけを抽出（トリムして比較）
+    // タグ名を小文字＆トリミングして比較
     filteredArticles = all.filter(a => {
       if (!Array.isArray(a.tags)) return false;
-      return a.tags.map(t => t.trim()).includes(tag.trim());
+      return a.tags.some(t => t.trim().toLowerCase() === tag.trim().toLowerCase());
     });
   });
 </script>
