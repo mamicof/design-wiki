@@ -4,6 +4,7 @@
   import { error } from '@sveltejs/kit';
   import { onMount } from 'svelte';
   import { marked } from 'marked';
+  import { base } from '$app/paths';
 
   let article = null;
   let toc = [];
@@ -11,12 +12,12 @@
 
   async function loadArticle(slug) {
     try {
-      const indexRes = await fetch('/content/index.json');
+      const indexRes = await fetch(`${base}/content/index.json`);
       const index = await indexRes.json();
       const item = index.find((a) => a.slug === slug);
       if (!item) throw error(404, '記事が見つかりません');
 
-      const res = await fetch(item.path);
+      const res = await fetch(`${base}${item.path}`);
       const text = await res.text();
 
       // frontmatter抽出
