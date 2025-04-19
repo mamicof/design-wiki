@@ -1,16 +1,8 @@
 <script>
   import "../styles/global.css";
-  import { onMount } from 'svelte';
-  import { getCategoriesAndTags } from '$lib/utils/articleUtils.js';
 
-  let categories = [];
-  let tags = [];
-
-  onMount(async () => {
-    const data = await getCategoriesAndTags();
-    categories = data.categories;
-    tags = data.tags;
-  });
+  export let data;
+  const { categories, tags } = data;
 </script>
 
 <svelte:head>
