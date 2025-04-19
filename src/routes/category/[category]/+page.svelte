@@ -1,3 +1,4 @@
+<!-- src/routes/category/[category]/+page.svelte -->
 <script>
   import { page } from '$app/stores';
   import { onMount } from 'svelte';
@@ -9,8 +10,7 @@
 
   onMount(async () => {
     const all = await getArticles();
-    // "公開" のみ表示
-    articles = all.filter(a => a.category === category && a.status === "公開");
+    articles = all.filter(a => a.category === category);
   });
 </script>
 
