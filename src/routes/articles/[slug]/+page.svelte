@@ -57,7 +57,7 @@
         return `<h${level}>${text}</h${level}>`;
       };
 
-      const html = marked(body, { renderer });
+      const html = marked.parse(body, { renderer });
       article = { ...data, content: html };
     } catch (err) {
       console.error('記事読み込みエラー:', err);
