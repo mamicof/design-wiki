@@ -1,27 +1,16 @@
 <script>
   import "../styles/global.css";
+  import { onMount } from 'svelte';
+  import { getCategoriesAndTags } from '$lib/utils/articleUtils.js';
 
-  const categories = [
-    "デザインプロセス",
-    "UX設計",
-    "UI設計",
-    "デザインシステム",
-    "アクセシビリティ",
-    "リサーチ",
-    "Figma",
-    "HTML/CSS",
-    "運用",
-    "マーケティング",
-    "勉強方法",
-    "ツール置き場",
-    "参考リンク集"
-  ];
+  let categories = [];
+  let tags = [];
 
-  const tags = [
-    "カラー", "入力フォーム", "UI", "UX", "命名規則", "コンポーネント",
-    "マーケティング", "インラタクション", "デザインプロセス",
-    "フォント・テキスト", "レイアウト"
-  ];
+  onMount(async () => {
+    const data = await getCategoriesAndTags();
+    categories = data.categories;
+    tags = data.tags;
+  });
 </script>
 
 <svelte:head>
@@ -47,14 +36,14 @@
       <p class="label">カテゴリ</p>
       <ul class="menu">
         {#each categories as category}
-          <li><a class="menu-link" href={"/category/" + category}>{category}</a></li>
+          <li><a class="menu-link" href={"/category/" + encodeURIComponent(category)}>{category}</a></li>
         {/each}
       </ul>
 
       <p class="label">タグ</p>
       <div class="tags">
         {#each tags as tag}
-          <a class="tag" href={"/tags/" + tag}>{tag}</a>
+          <a class="tag" href={"/tags/" + encodeURIComponent(tag)}>{tag}</a>
         {/each}
       </div>
     </nav>
