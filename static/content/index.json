@@ -2,5 +2,9 @@
   {
     "slug": "color-style-in-design-systems",
     "path": "/content/color-style-in-design-systems.md"
+  },
+  {
+    "slug": "semantic-color-tokens",
+    "path": "/content/semantic-color-tokens.md"
   }
 ]
