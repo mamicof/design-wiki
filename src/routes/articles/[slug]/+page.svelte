@@ -1,12 +1,8 @@
 <!-- src/routes/articles/[slug]/+page.svelte -->
 <script>
   import { page } from '$app/stores';
-  import { error } from '@sveltejs/kit';
   import { onMount } from 'svelte';
-  import matter from 'gray-matter';
   import { marked } from 'marked';
-
-  const files = import.meta.glob('/content/*.md', { as: 'raw' });
 
   let article = null;
   let toc = [];
@@ -14,15 +10,36 @@
   $: slug = $page.params.slug;
 
   onMount(async () => {
-    const path = `/content/${slug}.md`;
-    const loader = files[path];
+    const indexRes = await fetch('/content/index.json');
+    const index = await indexRes.json();
+    const matched = index.find(item => item.slug === slug);
 
-    if (!loader) {
-      throw error(404, '記事が見つかりません');
+    if (!matched) {
+      article = { title: '記事が見つかりません', content: '', date: '', emoji: '❌' };
+      return;
     }
 
-    const raw = await loader();
-    const { data, content } = matter(raw);
+    const res = await fetch(matched.path);
+    const text = await res.text();
+
+    const frontmatterRegex = /^---\n([\s\S]*?)\n---/;
+    const match = text.match(frontmatterRegex);
+    const rawMeta = match?.[1] || '';
+    const body = text.replace(frontmatterRegex, '').trim();
+
+    const data = {};
+    for (const line of rawMeta.split('\n')) {
+      const [key, ...rest] = line.split(':');
+      const value = rest.join(':').trim();
+      if (key === 'tags') {
+        data.tags = value
+          .replace(/^\[|\]$/g, '')
+          .split(',')
+          .map(t => t.trim().replace(/^"|"$/g, ''));
+      } else {
+        data[key.trim()] = value.replace(/^"|"$/g, '');
+      }
+    }
 
     const renderer = new marked.Renderer();
     renderer.heading = (text, level) => {
@@ -34,7 +51,7 @@
       return `<h${level}>${text}</h${level}>`;
     };
 
-    const html = marked(content, { renderer });
+    const html = marked(body, { renderer });
     article = { ...data, content: html };
   });
 </script>
