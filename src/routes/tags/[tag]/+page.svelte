@@ -4,13 +4,13 @@
   import ArticleCard from '$lib/components/ArticleCard.svelte';
   import { getArticles } from '$lib/utils/articleUtils';
 
+  let all = [];
   let filteredArticles = [];
   $: tag = $page.params.tag;
 
   onMount(async () => {
-    const all = await getArticles();
+    all = await getArticles();
 
-    // 比較用に normalize + lowercase + trim
     const normalize = (str) => str?.normalize('NFKC').trim().toLowerCase();
     const normalizedTag = normalize(tag);
 
@@ -25,6 +25,10 @@
 
 {#if filteredArticles.length === 0}
   <p>該当する記事はありません。</p>
+  <pre style="font-size: 12px; color: #999;">
+    tag = {tag}
+    all tags = {JSON.stringify(all.map(a => a.tags), null, 2)}
+  </pre>
 {:else}
   <div class="grid">
     {#each filteredArticles as article}
@@ -36,8 +40,8 @@
 <style>
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.2rem;
     margin-top: 1.5rem;
   }
 </style>
